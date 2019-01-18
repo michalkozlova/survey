@@ -11,4 +11,11 @@
         android:id="@+id/action_add"
         />
 
+    <item
+        android:icon="@drawable/ic_save"
+        app:showAsAction="ifRoom"
+        android:title="Save changes"
+        android:id="@+id/action_save"
+        />
+
 </menu>

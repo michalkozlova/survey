@@ -29,8 +29,7 @@ public class OpenStoreActivity extends AppCompatActivity {
         });
 
 
-        //TODO: number picker
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NameFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewStoreFragment()).commit();
     }
 
 }

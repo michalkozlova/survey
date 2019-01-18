@@ -19,10 +19,13 @@ import java.util.ArrayList;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 import michal.edu.first.R;
 
-public class FullQuiz implements Serializable {
+public class FullQuiz implements Serializable{
 
     @SerializedName("questionnaire")
     private ArrayList<Section> sections;
+
+    public FullQuiz() {
+    }
 
     public FullQuiz(ArrayList<Section> sections) {
         this.sections = sections;

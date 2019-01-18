@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import michal.edu.first.MainActivity;
 import michal.edu.first.R;
@@ -50,10 +52,12 @@ public class RegistrationActivity extends AppCompatActivity implements OnFailure
                 task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        DatabaseReference newUser = FirebaseDatabase.getInstance().getReference().child("Users").push();
+                        newUser.setValue(new User(newUser.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid(), email(), firstName(), lastName()));
+
                         Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-
                     }
                 });
                 task.addOnFailureListener(RegistrationActivity.this);

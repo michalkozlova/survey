@@ -3,6 +3,7 @@ package michal.edu.first.Questionnaire;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -12,10 +13,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import michal.edu.first.Login.User;
 import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 import michal.edu.first.Questionnaire.Java.Question;
+import michal.edu.first.Questionnaire.Java.Section;
 import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionAdapter;
 import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionFragment;
 import michal.edu.first.R;
@@ -29,6 +41,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private QuestionFragment section3;
     private AlertDialog alertDialog;
 
+    final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +50,12 @@ public class QuestionnaireActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         tvFirstSection = findViewById(R.id.tvFirstSection);
         tvSecondSection = findViewById(R.id.tvSecondSection);
         tvThirdSection = findViewById(R.id.tvThirdSection);
+
+        //TODO: how to do get class from Database?
+        //currentFullQuiz = FirebaseDatabase.getInstance().getReference("Questionnaires").child(uid).child("sections");
 
         if (currentFullQuiz == null) {
             currentFullQuiz = FullQuiz.importFromJSON(this);
@@ -56,8 +72,9 @@ public class QuestionnaireActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.firstSection, section1).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.secondSection, section2).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.thirdSection, section3).commit();
-    }
 
+        //TODO: ask to save changes before leaving the activity
+    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_questionnaire, menu);
@@ -72,9 +89,17 @@ public class QuestionnaireActivity extends AppCompatActivity {
             case R.id.action_add:
                 addQuestion();
                 break;
+            case R.id.action_save:
+                saveChanges();
+                break;
         }
 
         return true;
+    }
+
+    private void saveChanges() {
+        DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(userID);
+        newQuestionnaire.setValue(currentFullQuiz);
     }
 
     private int sectionID;

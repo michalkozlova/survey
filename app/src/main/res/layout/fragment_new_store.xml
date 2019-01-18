@@ -7,13 +7,17 @@
     tools:context=".NewStore.NewStoreFragment">
 
 
-    <Spinner
-        android:id="@+id/spType"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/btnChoseType"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/etStoreNameEng"
-        app:layout_constraintStart_toStartOf="@+id/etStoreNameEng"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Click to chose the type"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -28,7 +32,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spType" />
+        app:layout_constraintTop_toBottomOf="@+id/btnChoseType" />
 
     <Button
         android:id="@+id/btnNext"
@@ -59,13 +63,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <Spinner
-        android:id="@+id/spBranchNum"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <NumberPicker
+        android:id="@+id/npBranchNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/etStoreNameHeb"
-        app:layout_constraintStart_toStartOf="@+id/etStoreNameHeb"
-        app:layout_constraintTop_toBottomOf="@+id/etStoreNameHeb" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etStoreNameHeb"></NumberPicker>
 
 </android.support.constraint.ConstraintLayout>

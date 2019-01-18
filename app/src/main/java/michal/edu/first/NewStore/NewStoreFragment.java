@@ -1,6 +1,8 @@
 package michal.edu.first.NewStore;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,8 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import michal.edu.first.Questionnaire.Java.Question;
 import michal.edu.first.R;
 
 
@@ -19,9 +27,18 @@ import michal.edu.first.R;
  */
 public class NewStoreFragment extends Fragment {
 
-    Spinner spinnerType, spBranchNum;
-    EditText etStoreNameEng;
-    Button btnNext;
+    public static final int STORE_RETAIL = 0;
+    public static final int STORE_RESTAURANT = 1;
+
+    final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+    private int storeType;
+    private String StoreNameEng;
+    private String StoreNameHeb;
+
+    EditText etStoreNameEng, etStoreNameHeb;
+    Button btnNext, btnChoseType;
+    NumberPicker npBranchNumber;
 
     public NewStoreFragment() {
         // Required empty public constructor
@@ -33,24 +50,56 @@ public class NewStoreFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_new_store, container, false);
-        spinnerType = v.findViewById(R.id.spType);
-        spBranchNum = v.findViewById(R.id.spBranchNum);
+        etStoreNameEng = v.findViewById(R.id.etStoreNameEng);
+        etStoreNameHeb = v.findViewById(R.id.etStoreNameHeb);
         btnNext = v.findViewById(R.id.btnNext);
+        btnChoseType = v.findViewById(R.id.btnChoseType);
+        npBranchNumber = v.findViewById(R.id.npBranchNumber);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.types, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerType.setAdapter(adapter);
-
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getContext(), R.array.amount, android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spBranchNum.setAdapter(adapter1);
+        btnChoseType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                dialog.setTitle("Choose the type:");
+                dialog.setSingleChoiceItems(R.array.types, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        storeType = which;
+                    }
+                });
+                dialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (storeType == STORE_RETAIL){
+                            btnChoseType.setText("Retail");
+                        }else {
+                            btnChoseType.setText("Restaurant");
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (storeType == STORE_RETAIL) {
+                    DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Retail").child(userID);
+                    newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
+                }else {
+                    DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Restaurant").child(userID);
+                    newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
+                }
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewAddressFragment()).commit();
             }
         });
+
+
+        //TODO: number picker
+        npBranchNumber.setMinValue(1);
+        npBranchNumber.setMinValue(10);
 
         return v;
     }

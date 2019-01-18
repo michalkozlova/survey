@@ -1,17 +1,38 @@
 package michal.edu.first.Login;
 
+import michal.edu.first.Questionnaire.Java.FullQuiz;
+
 public class User {
-;
-    String email;
-    String firstName;
-    String lastName;
+    private String id;
+    private String key;
+    private String email;
+    private String firstName;
+    private String lastName;
 
     public User(){}
 
-    public User(String email, String firstName, String lastName) {
+    public User(String key, String id, String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.id = id;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -41,7 +62,9 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "id='" + id + '\'' +
+                ", key='" + key + '\'' +
+                ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

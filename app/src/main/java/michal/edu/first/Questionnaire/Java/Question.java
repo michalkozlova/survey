@@ -19,6 +19,9 @@ public class Question implements Serializable {
         this.questionType = questionType;
     }
 
+    public Question() {
+    }
+
     public String getQuestionText() {
         return questionText;
     }

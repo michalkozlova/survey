@@ -1,8 +1,14 @@
 package michal.edu.first.Questionnaire.Java;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,7 +21,9 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
+import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 import michal.edu.first.R;
 

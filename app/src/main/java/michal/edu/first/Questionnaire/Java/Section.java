@@ -16,6 +16,9 @@ public class Section implements Serializable {
         this.questions = questions;
     }
 
+    public Section() {
+    }
+
     public String getSectionName() {
         return sectionName;
     }

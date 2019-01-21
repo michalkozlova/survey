@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.Java.Question;
 import michal.edu.first.R;
 
@@ -29,8 +30,6 @@ public class NewStoreFragment extends Fragment {
 
     public static final int STORE_RETAIL = 0;
     public static final int STORE_RESTAURANT = 1;
-
-    final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     private int storeType;
     private String StoreNameEng;
@@ -85,13 +84,8 @@ public class NewStoreFragment extends Fragment {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (storeType == STORE_RETAIL) {
-                    DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Retail").child(userID);
-                    newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
-                }else {
-                    DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Restaurant").child(userID);
-                    newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
-                }
+                DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Stores").child(MainActivity.userID);
+                newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewAddressFragment()).commit();
             }
         });

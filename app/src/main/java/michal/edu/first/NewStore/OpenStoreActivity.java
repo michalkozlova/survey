@@ -7,10 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import michal.edu.first.MainActivity;
 import michal.edu.first.R;
 
 public class OpenStoreActivity extends AppCompatActivity {
 
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Stores").child(MainActivity.userID);
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +33,11 @@ public class OpenStoreActivity extends AppCompatActivity {
             }
         });
 
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewStoreFragment()).commit();
+        if (ref == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewStoreFragment()).commit();
+        }else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewAddressFragment()).commit();
+        }
     }
 
 }

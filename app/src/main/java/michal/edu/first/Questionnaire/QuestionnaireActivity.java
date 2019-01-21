@@ -1,11 +1,8 @@
 package michal.edu.first.Questionnaire;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,35 +10,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import michal.edu.first.Login.User;
+import java.util.ArrayList;
+import java.util.List;
+
 import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 import michal.edu.first.Questionnaire.Java.Question;
 import michal.edu.first.Questionnaire.Java.Section;
-import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionAdapter;
+import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionFragment;
 import michal.edu.first.R;
 
-public class QuestionnaireActivity extends AppCompatActivity {
+public class QuestionnaireActivity extends AppCompatActivity{
 
     public static FullQuiz currentFullQuiz;
+    List<Section> sections;
     TextView tvFirstSection, tvSecondSection, tvThirdSection;
     private QuestionFragment section1;
     private QuestionFragment section2;
     private QuestionFragment section3;
     private AlertDialog alertDialog;
-
-    final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +49,12 @@ public class QuestionnaireActivity extends AppCompatActivity {
         tvSecondSection = findViewById(R.id.tvSecondSection);
         tvThirdSection = findViewById(R.id.tvThirdSection);
 
-        //TODO: how to do get class from Database?
-        //currentFullQuiz = FirebaseDatabase.getInstance().getReference("Questionnaires").child(uid).child("sections");
+
 
         if (currentFullQuiz == null) {
             currentFullQuiz = FullQuiz.importFromJSON(this);
         }
+
 
         section1 = QuestionFragment.newInstance(currentFullQuiz.getSections().get(0));
         section2 = QuestionFragment.newInstance(currentFullQuiz.getSections().get(1));
@@ -98,7 +93,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(userID);
+        DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(MainActivity.userID);
         newQuestionnaire.setValue(currentFullQuiz);
     }
 
@@ -150,7 +145,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
                     newQuestion = editText.getText().toString();
                     alertDialog = null;
                 }
-                addQuestionType().show();
+                addQuestionType();
             }
         });
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -163,7 +158,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         alertDialog = dialog.show();
     }
 
-    private AlertDialog.Builder addQuestionType() {
+    private void addQuestionType() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Set question's type:");
         dialog.setSingleChoiceItems(R.array.questionTypes, -1, new DialogInterface.OnClickListener() {
@@ -181,6 +176,6 @@ public class QuestionnaireActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        return dialog;
+        dialog.show();
     }
 }

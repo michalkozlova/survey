@@ -16,13 +16,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import michal.edu.first.Login.LoginActivity;
 import michal.edu.first.NewStore.OpenStoreActivity;
+import michal.edu.first.Questionnaire.Java.FullQuiz;
+import michal.edu.first.Questionnaire.Java.Section;
+import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SectionListener {
+
+    public static final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+    List<Section> sections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,5 +139,35 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void btnTest(View view) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference questionnaires = reference.child("Questionnaires").child(userID).child("sections");
+        sections = new ArrayList<>();
+        questionnaires.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Section value = snapshot.getValue(Section.class);
+                    sections.add(value);
+                }
+                onSectionCallBack(sections);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+    @Override
+    public void onSectionCallBack(List<Section> sections) {
+        for (Section section : sections) {
+            System.out.println(section.toString());
+        }
     }
 }

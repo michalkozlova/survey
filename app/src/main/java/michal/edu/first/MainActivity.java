@@ -33,11 +33,9 @@ import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, SectionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-    List<Section> sections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,33 +139,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void btnTest(View view) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference questionnaires = reference.child("Questionnaires").child(userID).child("sections");
-        sections = new ArrayList<>();
-        questionnaires.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Section value = snapshot.getValue(Section.class);
-                    sections.add(value);
-                }
-                onSectionCallBack(sections);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
 
-    @Override
-    public void onSectionCallBack(List<Section> sections) {
-        for (Section section : sections) {
-            System.out.println(section.toString());
-        }
-    }
 }

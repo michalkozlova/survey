@@ -23,6 +23,7 @@ import java.util.List;
 import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 import michal.edu.first.Questionnaire.Java.Question;
+import michal.edu.first.Questionnaire.Java.QuestionnaireRepo;
 import michal.edu.first.Questionnaire.Java.Section;
 import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionFragment;
@@ -52,21 +53,29 @@ public class QuestionnaireActivity extends AppCompatActivity{
 
 
         if (currentFullQuiz == null) {
-            currentFullQuiz = FullQuiz.importFromJSON(this);
+            new QuestionnaireRepo().fireOrJson(this, new SectionListener() {
+                @Override
+                public void onSectionCallBack(FullQuiz fullQuiz) {
+
+                    currentFullQuiz = fullQuiz;
+
+
+                    section1 = QuestionFragment.newInstance(fullQuiz.getSections().get(0));
+                    section2 = QuestionFragment.newInstance(fullQuiz.getSections().get(1));
+                    section3 = QuestionFragment.newInstance(fullQuiz.getSections().get(2));
+
+                    tvFirstSection.setText(fullQuiz.getSections().get(0).getSectionName());
+                    tvSecondSection.setText(fullQuiz.getSections().get(1).getSectionName());
+                    tvThirdSection.setText(fullQuiz.getSections().get(2).getSectionName());
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.firstSection, section1).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.secondSection, section2).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.thirdSection, section3).commit();
+                }
+            });
         }
 
 
-        section1 = QuestionFragment.newInstance(currentFullQuiz.getSections().get(0));
-        section2 = QuestionFragment.newInstance(currentFullQuiz.getSections().get(1));
-        section3 = QuestionFragment.newInstance(currentFullQuiz.getSections().get(2));
-
-        tvFirstSection.setText(currentFullQuiz.getSections().get(0).getSectionName());
-        tvSecondSection.setText(currentFullQuiz.getSections().get(1).getSectionName());
-        tvThirdSection.setText(currentFullQuiz.getSections().get(2).getSectionName());
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.firstSection, section1).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.secondSection, section2).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.thirdSection, section3).commit();
 
         //TODO: ask to save changes before leaving the activity
     }

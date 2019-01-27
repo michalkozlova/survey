@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
@@ -20,8 +19,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import michal.edu.first.MainActivity;
-import michal.edu.first.NewStore.OpenStoreActivity;
 import michal.edu.first.R;
+import michal.edu.first.UserID;
 
 public class LoginActivity extends AppCompatActivity implements OnFailureListener {
 

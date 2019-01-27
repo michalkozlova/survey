@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,14 +36,14 @@ import michal.edu.first.Questionnaire.QuestionnaireActivity;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        
+
         checkIfLoggedIn();
     }
 
@@ -72,10 +73,13 @@ public class MainActivity extends AppCompatActivity
                 boolean isUserLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
                 
                 if (!isUserLoggedIn){
+                    System.out.println("if");
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }else {
+                    System.out.println("else");
+                    UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     //TODO: to do something else
                 }
             }

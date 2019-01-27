@@ -12,10 +12,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import michal.edu.first.MainActivity;
 import michal.edu.first.R;
+import michal.edu.first.UserID;
 
 public class OpenStoreActivity extends AppCompatActivity {
 
-    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Stores").child(MainActivity.userID);
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID);
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

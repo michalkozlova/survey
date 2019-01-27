@@ -1,5 +1,6 @@
 package michal.edu.first.Questionnaire;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,11 +29,11 @@ import michal.edu.first.Questionnaire.Java.Section;
 import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionFragment;
 import michal.edu.first.R;
+import michal.edu.first.UserID;
 
 public class QuestionnaireActivity extends AppCompatActivity{
 
     public static FullQuiz currentFullQuiz;
-    List<Section> sections;
     TextView tvFirstSection, tvSecondSection, tvThirdSection;
     private QuestionFragment section1;
     private QuestionFragment section2;
@@ -50,7 +51,7 @@ public class QuestionnaireActivity extends AppCompatActivity{
         tvSecondSection = findViewById(R.id.tvSecondSection);
         tvThirdSection = findViewById(R.id.tvThirdSection);
 
-
+        showProgress(true);
 
         if (currentFullQuiz == null) {
             new QuestionnaireRepo().fireOrJson(this, new SectionListener() {
@@ -58,7 +59,6 @@ public class QuestionnaireActivity extends AppCompatActivity{
                 public void onSectionCallBack(FullQuiz fullQuiz) {
 
                     currentFullQuiz = fullQuiz;
-
 
                     section1 = QuestionFragment.newInstance(fullQuiz.getSections().get(0));
                     section2 = QuestionFragment.newInstance(fullQuiz.getSections().get(1));
@@ -71,11 +71,13 @@ public class QuestionnaireActivity extends AppCompatActivity{
                     getSupportFragmentManager().beginTransaction().replace(R.id.firstSection, section1).commit();
                     getSupportFragmentManager().beginTransaction().replace(R.id.secondSection, section2).commit();
                     getSupportFragmentManager().beginTransaction().replace(R.id.thirdSection, section3).commit();
+
+                    showProgress(false);
+                    System.out.println(UserID.userID);
                 }
             });
         }
-
-
+        System.out.println(UserID.userID);
 
         //TODO: ask to save changes before leaving the activity
     }
@@ -102,7 +104,7 @@ public class QuestionnaireActivity extends AppCompatActivity{
     }
 
     private void saveChanges() {
-        DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(MainActivity.userID);
+        DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(UserID.userID);
         newQuestionnaire.setValue(currentFullQuiz);
     }
 
@@ -123,6 +125,7 @@ public class QuestionnaireActivity extends AppCompatActivity{
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 sectionID = which;
+                System.out.println(sectionID);
             }
         });
 
@@ -186,5 +189,22 @@ public class QuestionnaireActivity extends AppCompatActivity{
             }
         });
         dialog.show();
+    }
+
+    ProgressDialog dialog;
+
+    private void showProgress(boolean show){
+        if (dialog == null) {
+            dialog = new ProgressDialog(this);
+
+            dialog.setCancelable(true);
+            dialog.setTitle("Please wait");
+            dialog.setMessage("Loading...");
+        }
+        if (show){
+            dialog.show();
+        }else {
+            dialog.dismiss();
+        }
     }
 }

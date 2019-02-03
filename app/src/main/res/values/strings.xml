@@ -35,5 +35,6 @@
         <item>Yes / No</item>
         <item>Grade</item>
     </string-array>
+    <string name="title_activity_store">StoreActivity</string>
 
 </resources>

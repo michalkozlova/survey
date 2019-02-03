@@ -53,6 +53,8 @@ public class QuestionnaireActivity extends AppCompatActivity{
 
         showProgress(true);
 
+        //TODO: why he doesn't do it from the first time?????
+
         if (currentFullQuiz == null) {
             new QuestionnaireRepo().fireOrJson(this, new SectionListener() {
                 @Override
@@ -73,11 +75,9 @@ public class QuestionnaireActivity extends AppCompatActivity{
                     getSupportFragmentManager().beginTransaction().replace(R.id.thirdSection, section3).commit();
 
                     showProgress(false);
-                    System.out.println(UserID.userID);
                 }
             });
         }
-        System.out.println(UserID.userID);
 
         //TODO: ask to save changes before leaving the activity
     }
@@ -106,6 +106,7 @@ public class QuestionnaireActivity extends AppCompatActivity{
     private void saveChanges() {
         DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(UserID.userID);
         newQuestionnaire.setValue(currentFullQuiz);
+        //TODO: fix it
     }
 
     private int sectionID;

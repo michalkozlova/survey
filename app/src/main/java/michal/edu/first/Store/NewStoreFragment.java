@@ -1,4 +1,4 @@
-package michal.edu.first.NewStore;
+package michal.edu.first.Store;
 
 
 import android.app.AlertDialog;
@@ -8,19 +8,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import michal.edu.first.MainActivity;
-import michal.edu.first.Questionnaire.Java.Question;
 import michal.edu.first.R;
+import michal.edu.first.Store.NewAddressFragment;
+import michal.edu.first.Store.Store;
 import michal.edu.first.UserID;
 
 

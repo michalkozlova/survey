@@ -15,22 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import michal.edu.first.Login.LoginActivity;
-import michal.edu.first.NewStore.OpenStoreActivity;
-import michal.edu.first.Questionnaire.Java.FullQuiz;
-import michal.edu.first.Questionnaire.Java.Section;
-import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -127,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_questionnaire) {
             startActivity(new Intent(this, QuestionnaireActivity.class));
         } else if (id == R.id.nav_store) {
-            startActivity(new Intent(this, OpenStoreActivity.class));
+            //startActivity(new Intent(this, OpenStoreActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

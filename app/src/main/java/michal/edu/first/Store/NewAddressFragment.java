@@ -1,4 +1,4 @@
-package michal.edu.first.NewStore;
+package michal.edu.first.Store;
 
 
 import android.os.Bundle;

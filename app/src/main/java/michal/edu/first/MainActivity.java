@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import michal.edu.first.Login.LoginActivity;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
+import michal.edu.first.Store.NewStoreActivity;
+import michal.edu.first.Store.StoreActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +67,8 @@ public class MainActivity extends AppCompatActivity
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }else {
-                    System.out.println("else");
-                    UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    //System.out.println("else");
+                    //UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     //TODO: to do something else
                 }
             }
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_questionnaire) {
             startActivity(new Intent(this, QuestionnaireActivity.class));
         } else if (id == R.id.nav_store) {
-            //startActivity(new Intent(this, OpenStoreActivity.class));
+            startActivity(new Intent(this, NewStoreActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

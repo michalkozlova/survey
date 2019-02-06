@@ -1,13 +1,14 @@
 package michal.edu.first.Store;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -16,47 +17,37 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import michal.edu.first.R;
-import michal.edu.first.Store.NewAddressFragment;
-import michal.edu.first.Store.Store;
 import michal.edu.first.UserID;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class NewStoreFragment extends Fragment {
+public class NewStoreActivity extends AppCompatActivity {
 
     public static final int STORE_RETAIL = 0;
     public static final int STORE_RESTAURANT = 1;
 
     private int storeType;
-    private String StoreNameEng;
-    private String StoreNameHeb;
 
     EditText etStoreNameEng, etStoreNameHeb;
     Button btnNext, btnChoseType;
     NumberPicker npBranchNumber;
 
-    public NewStoreFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_new_store, container, false);
-        etStoreNameEng = v.findViewById(R.id.etStoreNameEng);
-        etStoreNameHeb = v.findViewById(R.id.etStoreNameHeb);
-        btnNext = v.findViewById(R.id.btnNext);
-        btnChoseType = v.findViewById(R.id.btnChoseType);
-        npBranchNumber = v.findViewById(R.id.npBranchNumber);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_store);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        etStoreNameEng = findViewById(R.id.etStoreNameEng);
+        etStoreNameHeb = findViewById(R.id.etStoreNameHeb);
+        btnNext = findViewById(R.id.btnNext);
+        btnChoseType = findViewById(R.id.btnChoseType);
+        npBranchNumber = findViewById(R.id.npBranchNumber);
 
         btnChoseType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(NewStoreActivity.this);
                 dialog.setTitle("Choose the type:");
                 dialog.setSingleChoiceItems(R.array.types, -1, new DialogInterface.OnClickListener() {
                     @Override
@@ -84,7 +75,7 @@ public class NewStoreFragment extends Fragment {
             public void onClick(View v) {
                 DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID);
                 newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new NewAddressFragment()).commit();
+                startActivity(new Intent(NewStoreActivity.this, StoreActivity.class));
             }
         });
 
@@ -92,7 +83,6 @@ public class NewStoreFragment extends Fragment {
         //TODO: number picker
         npBranchNumber.setMinValue(1);
         npBranchNumber.setMinValue(10);
-
-        return v;
     }
+
 }

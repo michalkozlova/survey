@@ -36,5 +36,7 @@
         <item>Grade</item>
     </string-array>
     <string name="title_activity_store">StoreActivity</string>
+    <string name="title_activity_new_store">NewStoreActivity</string>
+    <string name="title_activity_new_branch">Add a new branch</string>
 
 </resources>

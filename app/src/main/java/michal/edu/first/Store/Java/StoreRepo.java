@@ -43,4 +43,31 @@ public class StoreRepo{
             }
         });
     }
+
+
+    public ArrayList<Branch> getBranchesFromFireBase(final BranchListener callback){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches");
+        final ArrayList<Branch> mBranches = new ArrayList<>();
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Branch value = snapshot.getValue(Branch.class);
+                    mBranches.add(value);
+                }
+
+                if (!mBranches.isEmpty()){
+                    callback.onBranchCallback(mBranches);
+                    System.out.println(mBranches);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println(databaseError);
+            }
+        });
+
+        return mBranches;
+    }
 }

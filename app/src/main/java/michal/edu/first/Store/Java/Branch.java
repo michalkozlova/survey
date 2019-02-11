@@ -10,15 +10,17 @@ public class Branch implements Serializable {
     private String branchNameHeb;
     private String branchPhone;
     private Address branchAddress;
+    private String branchID;
 
     public Branch() {
     }
 
-    public Branch(String branchNameEng, String branchNameHeb, String branchPhone, Address branchAddress) {
+    public Branch(String branchNameEng, String branchNameHeb, String branchPhone, Address branchAddress, String branchID) {
         this.branchNameEng = branchNameEng;
         this.branchNameHeb = branchNameHeb;
         this.branchPhone = branchPhone;
         this.branchAddress = branchAddress;
+        this.branchID = branchID;
     }
 
     public String getBranchNameEng() {
@@ -53,6 +55,14 @@ public class Branch implements Serializable {
         this.branchAddress = branchAddress;
     }
 
+    public String getBranchID() {
+        return branchID;
+    }
+
+    public void setBranchID(String branchID) {
+        this.branchID = branchID;
+    }
+
     @Override
     public String toString() {
         return "Branch{" +
@@ -60,6 +70,7 @@ public class Branch implements Serializable {
                 ", branchNameHeb='" + branchNameHeb + '\'' +
                 ", branchPhone='" + branchPhone + '\'' +
                 ", branchAddress=" + branchAddress +
+                ", branchID='" + branchID + '\'' +
                 '}';
     }
 }

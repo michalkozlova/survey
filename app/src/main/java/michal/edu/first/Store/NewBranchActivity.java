@@ -42,6 +42,8 @@ public class NewBranchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 showProgress(true);
 
+                String branchID = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").push().getKey();
+
                 int num = Integer.valueOf(etNum.getText().toString());
                 String street = etStreet.getText().toString();
                 String city = etCity.getText().toString();
@@ -50,9 +52,9 @@ public class NewBranchActivity extends AppCompatActivity {
                 String branchNameEng = etBranchNameEng.getText().toString();
                 String branchNameHeb = etBranchNameHeb.getText().toString();
                 String branchPhone = etPhoneNumber.getText().toString();
-                Branch branch = new Branch(branchNameEng, branchNameHeb, branchPhone, address);
+                Branch branch = new Branch(branchNameEng, branchNameHeb, branchPhone, address, branchID);
 
-                DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").push();
+                DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").child(branchID);
                 newBranch.setValue(branch);
 
                 startActivity(new Intent(NewBranchActivity.this, StoreActivity.class));

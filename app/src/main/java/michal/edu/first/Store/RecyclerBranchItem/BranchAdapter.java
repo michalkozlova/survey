@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import michal.edu.first.R;
+import michal.edu.first.Store.FullBranchDetailsFragment;
 import michal.edu.first.Store.Java.Branch;
+import michal.edu.first.Store.StoreActivity;
 
 public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchViewHolder>{
 
@@ -31,11 +34,23 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BranchViewHolder branchViewHolder, int i) {
+    public void onBindViewHolder(@NonNull BranchViewHolder branchViewHolder, final int i) {
         final Branch branch = branches.get(i);
 
         branchViewHolder.tvBranchName.setText(branch.getBranchNameEng());
         branchViewHolder.tvBranchAddress.setText(branch.getBranchAddress().getCity() + ", " + branch.getBranchAddress().getStreet());
+
+        branchViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.branchContainer, FullBranchDetailsFragment.newInstance(branches.get(i)))
+                        .addToBackStack("")
+                        .commit();
+            }
+        });
     }
 
     @Override

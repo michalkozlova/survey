@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import michal.edu.first.R;
-import michal.edu.first.Store.Branch;
-import michal.edu.first.Store.Store;
+import michal.edu.first.Store.Java.Store;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +24,6 @@ public class BranchFragment extends Fragment {
 
         Bundle args = new Bundle();
         args.putSerializable("store", store);
-
         BranchFragment fragment = new BranchFragment();
         fragment.setArguments(args);
         return fragment;

@@ -3,18 +3,16 @@ package michal.edu.first.Store;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.sql.SQLOutput;
-
 import michal.edu.first.R;
-import michal.edu.first.UserID;
+import michal.edu.first.Store.Java.Store;
+import michal.edu.first.Store.Java.StoreListener;
+import michal.edu.first.Store.Java.StoreRepo;
+import michal.edu.first.Store.RecyclerBranchItem.BranchFragment;
 
 public class StoreActivity extends AppCompatActivity {
 
@@ -33,7 +31,9 @@ public class StoreActivity extends AppCompatActivity {
         new StoreRepo().getStoreFromFirebase(new StoreListener() {
             @Override
             public void onStoreCallBack(Store store) {
-                //storeName.setText(store.getStoreNameEng());
+                storeName.setText(store.getStoreNameEng());
+
+                //getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, BranchFragment.newInstance(store)).commit();
             }
         });
 

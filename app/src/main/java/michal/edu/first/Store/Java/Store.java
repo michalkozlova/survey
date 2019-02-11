@@ -1,7 +1,9 @@
-package michal.edu.first.Store;
+package michal.edu.first.Store.Java;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import michal.edu.first.Store.Java.Branch;
 
 public class Store implements Serializable {
 

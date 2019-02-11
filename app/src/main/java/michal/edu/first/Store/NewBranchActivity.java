@@ -3,8 +3,6 @@ package michal.edu.first.Store;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import michal.edu.first.R;
+import michal.edu.first.Store.Java.Address;
+import michal.edu.first.Store.Java.Branch;
 import michal.edu.first.UserID;
 
 public class NewBranchActivity extends AppCompatActivity {

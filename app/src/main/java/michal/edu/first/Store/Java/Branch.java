@@ -1,6 +1,10 @@
-package michal.edu.first.Store;
+package michal.edu.first.Store.Java;
 
-public class Branch {
+import java.io.Serializable;
+
+import michal.edu.first.Store.Java.Address;
+
+public class Branch implements Serializable {
 
     private String branchNameEng;
     private String branchNameHeb;

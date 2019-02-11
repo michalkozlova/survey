@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import michal.edu.first.R;
-import michal.edu.first.Store.Branch;
+import michal.edu.first.Store.Java.Branch;
 
 public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchViewHolder>{
 

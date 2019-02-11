@@ -1,6 +1,8 @@
-package michal.edu.first.Store;
+package michal.edu.first.Store.Java;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
 
     private String city;
     private String street;

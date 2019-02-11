@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import michal.edu.first.Questionnaire.Java.Question;
 import michal.edu.first.Questionnaire.Java.Section;
 import michal.edu.first.R;
-import michal.edu.first.Store.Branch;
 
 
 /**

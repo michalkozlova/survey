@@ -1,15 +1,16 @@
-package michal.edu.first.Store;
+package michal.edu.first.Store.Java;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import michal.edu.first.UserID;
 
@@ -21,14 +22,16 @@ public class StoreRepo{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String storeNameEng = snapshot.child("storeNameEng").getValue(String.class);
-                    String storeNameHeb = snapshot.child("storeNameHeb").getValue(String.class);
-                    Integer storeType = snapshot.child("storeType").getValue(Integer.class);
 
-                    Store store = new Store(storeType, storeNameEng, storeNameHeb);
-                    mStores.add(store);
-                }
+                HashMap<String, Object> map = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
+                });
+
+                Number st = (Number) map.get("storeType");
+                String snEng = (String) map.get("storeNameEng");
+                String snHeb = (String) map.get("storeNameHeb");
+
+                Store store = new Store(st.intValue(), snEng, snHeb);
+                mStores.add(store);
 
                 callback.onStoreCallBack(mStores.get(0));
                 System.out.println(mStores.get(0));

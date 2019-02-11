@@ -7,6 +7,9 @@ public class Branch {
     private String branchPhone;
     private Address branchAddress;
 
+    public Branch() {
+    }
+
     public Branch(String branchNameEng, String branchNameHeb, String branchPhone, Address branchAddress) {
         this.branchNameEng = branchNameEng;
         this.branchNameHeb = branchNameHeb;

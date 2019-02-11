@@ -19,6 +19,7 @@ import michal.edu.first.UserID;
 public class StoreActivity extends AppCompatActivity {
 
     TextView storeName;
+    Store store;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,15 @@ public class StoreActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         storeName = findViewById(R.id.storeName);
+
+        new StoreRepo().getStoreFromFirebase(new StoreListener() {
+            @Override
+            public void onStoreCallBack(Store store) {
+                //storeName.setText(store.getStoreNameEng());
+            }
+        });
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

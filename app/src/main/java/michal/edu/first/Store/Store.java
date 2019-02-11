@@ -1,34 +1,36 @@
 package michal.edu.first.Store;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Store {
+public class Store implements Serializable {
 
-    private int storeType;
+    private Integer storeType;
     private String StoreNameEng;
     private String StoreNameHeb;
     private ArrayList<Branch> branches;
 
-    public Store(int storeType, String storeNameEng, String storeNameHeb) {
+    public Store() {
+    }
+
+    public Store(Integer storeType, String storeNameEng, String storeNameHeb) {
         this.storeType = storeType;
         StoreNameEng = storeNameEng;
         StoreNameHeb = storeNameHeb;
     }
 
-    public Store(int storeType, String storeNameEng, String storeNameHeb, ArrayList<Branch> branches) {
+    public Store(Integer storeType, String storeNameEng, String storeNameHeb, ArrayList<Branch> branches) {
         this.storeType = storeType;
         StoreNameEng = storeNameEng;
         StoreNameHeb = storeNameHeb;
         this.branches = branches;
     }
 
-    public int getStoreType() {
+    public Integer getStoreType() {
         return storeType;
     }
 
-    public void setStoreType(int storeType) {
-        this.storeType = storeType;
-    }
+
 
     public String getStoreNameEng() {
         return StoreNameEng;
@@ -48,6 +50,10 @@ public class Store {
 
     public ArrayList<Branch> getBranches() {
         return branches;
+    }
+
+    public void setStoreType(Integer storeType) {
+        this.storeType = storeType;
     }
 
     public void setBranches(ArrayList<Branch> branches) {

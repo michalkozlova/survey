@@ -52,12 +52,8 @@ public class NewBranchActivity extends AppCompatActivity {
                 String branchPhone = etPhoneNumber.getText().toString();
                 Branch branch = new Branch(branchNameEng, branchNameHeb, branchPhone, address);
 
-//                DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID);
-//                newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
-
                 DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").push();
                 newBranch.setValue(branch);
-
 
                 startActivity(new Intent(NewBranchActivity.this, StoreActivity.class));
             }
@@ -73,7 +69,7 @@ public class NewBranchActivity extends AppCompatActivity {
 
             dialog.setCancelable(true);
             dialog.setTitle("Please wait");
-            dialog.setMessage("Loading...");
+            dialog.setMessage("Saving...");
         }
         if (show){
             dialog.show();

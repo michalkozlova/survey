@@ -12,6 +12,9 @@ public class Address {
         this.num = num;
     }
 
+    public Address() {
+    }
+
     public String getCity() {
         return city;
     }

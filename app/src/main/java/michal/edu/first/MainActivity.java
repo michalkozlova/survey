@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_questionnaire) {
             startActivity(new Intent(this, QuestionnaireActivity.class));
         } else if (id == R.id.nav_store) {
-            startActivity(new Intent(this, NewStoreActivity.class));
+            startActivity(new Intent(this, StoreActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

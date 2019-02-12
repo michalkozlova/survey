@@ -10,8 +10,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import michal.edu.first.Login.User;
-
 public class UserRepo {
 
     public void getUserFromFirebase(final UserListener callback){

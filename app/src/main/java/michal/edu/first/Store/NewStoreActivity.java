@@ -74,6 +74,9 @@ public class NewStoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID);
                 newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
+                UserID.thisUser.setHasStore(true);
+                DatabaseReference hasStore = FirebaseDatabase.getInstance().getReference().child("Users").child(UserID.thisUser.getKey()).child("hasStore");
+                hasStore.setValue(true);
                 startActivity(new Intent(NewStoreActivity.this, StoreActivity.class));
             }
         });

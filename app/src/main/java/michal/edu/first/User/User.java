@@ -1,4 +1,4 @@
-package michal.edu.first.Login;
+package michal.edu.first.User;
 
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 

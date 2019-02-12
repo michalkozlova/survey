@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import michal.edu.first.Login.LoginActivity;
-import michal.edu.first.Login.User;
+import michal.edu.first.User.User;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 import michal.edu.first.Store.StoreActivity;
 import michal.edu.first.User.UserID;
@@ -66,22 +66,24 @@ public class MainActivity extends AppCompatActivity
                 boolean isUserLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
                 
                 if (!isUserLoggedIn){
-                    System.out.println("if");
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }else {
-                    UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    new UserRepo().getUserFromFirebase(new UserListener() {
-                        @Override
-                        public void onUserCallback(ArrayList<User> users) {
-                            for (User user : users) {
-                                if(user.getId().equals(UserID.userID)){
-                                    UserID.thisUser = user;
+                    if (UserID.thisUser == null || UserID.userID == null) {
+                        UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        new UserRepo().getUserFromFirebase(new UserListener() {
+                            @Override
+                            public void onUserCallback(ArrayList<User> users) {
+                                for (User user : users) {
+                                    if (user.getId().equals(UserID.userID)) {
+                                        UserID.thisUser = user;
+                                    }
                                 }
+                                System.out.println(UserID.thisUser);
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
@@ -136,6 +138,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
+            UserID.userID = null;
+            UserID.thisUser = null;
             FirebaseAuth.getInstance().signOut();
         }
 

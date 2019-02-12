@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import michal.edu.first.UserID;
+import michal.edu.first.User.UserID;
 
 public class StoreRepo{
 
@@ -25,16 +25,16 @@ public class StoreRepo{
 
                 HashMap<String, Object> map = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
+                    //UserID.hasStore = true;
+                    Number st = (Number) map.get("storeType");
+                    String snEng = (String) map.get("storeNameEng");
+                    String snHeb = (String) map.get("storeNameHeb");
 
-                Number st = (Number) map.get("storeType");
-                String snEng = (String) map.get("storeNameEng");
-                String snHeb = (String) map.get("storeNameHeb");
+                    Store store = new Store(st.intValue(), snEng, snHeb);
+                    mStores.add(store);
 
-                Store store = new Store(st.intValue(), snEng, snHeb);
-                mStores.add(store);
-
-                callback.onStoreCallBack(mStores.get(0));
-                System.out.println(mStores.get(0));
+                    callback.onStoreCallBack(mStores.get(0));
+                    System.out.println(mStores.get(0));
             }
 
             @Override

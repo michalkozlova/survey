@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import michal.edu.first.MainActivity;
 import michal.edu.first.R;
-import michal.edu.first.UserID;
 
 public class LoginActivity extends AppCompatActivity implements OnFailureListener {
 

@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import michal.edu.first.R;
 import michal.edu.first.Store.Java.Store;
-import michal.edu.first.UserID;
+import michal.edu.first.User.UserID;
 
 public class NewStoreActivity extends AppCompatActivity {
 

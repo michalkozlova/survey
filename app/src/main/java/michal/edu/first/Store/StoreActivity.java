@@ -17,6 +17,7 @@ import michal.edu.first.Store.Java.Store;
 import michal.edu.first.Store.Java.StoreListener;
 import michal.edu.first.Store.Java.StoreRepo;
 import michal.edu.first.Store.RecyclerBranchItem.BranchFragment;
+import michal.edu.first.User.UserID;
 
 public class StoreActivity extends AppCompatActivity {
 
@@ -32,21 +33,25 @@ public class StoreActivity extends AppCompatActivity {
 
         storeName = findViewById(R.id.storeName);
 
+            //startActivity(new Intent(StoreActivity.this, NewStoreActivity.class));
 
-        new StoreRepo().getStoreFromFirebase(new StoreListener() {
-            @Override
-            public void onStoreCallBack(Store store) {
-                storeName.setText(store.getStoreNameEng());
+            new StoreRepo().getStoreFromFirebase(new StoreListener() {
+                @Override
+                public void onStoreCallBack(Store store) {
+                    storeName.setText(store.getStoreNameEng());
 
-                //getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, BranchFragment.newInstance(store)).commit();
-                new StoreRepo().getBranchesFromFireBase(new BranchListener() {
-                    @Override
-                    public void onBranchCallback(ArrayList<Branch> branches) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, BranchFragment.newInstance(branches)).commit();
-                    }
-                });
-            }
-        });
+                    new StoreRepo().getBranchesFromFireBase(new BranchListener() {
+                        @Override
+                        public void onBranchCallback(ArrayList<Branch> branches) {
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.branchContainer, BranchFragment.newInstance(branches))
+                                    .commit();
+                        }
+                    });
+
+                }
+            });
 
 
 

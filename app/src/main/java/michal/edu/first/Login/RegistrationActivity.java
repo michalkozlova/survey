@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import michal.edu.first.MainActivity;
 import michal.edu.first.R;
-import michal.edu.first.UserID;
 
 public class RegistrationActivity extends AppCompatActivity implements OnFailureListener {
 

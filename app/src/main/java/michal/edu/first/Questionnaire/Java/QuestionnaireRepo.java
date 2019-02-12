@@ -19,9 +19,8 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.ArrayList;
 
-import michal.edu.first.MainActivity;
 import michal.edu.first.R;
-import michal.edu.first.UserID;
+import michal.edu.first.User.UserID;
 
 public class QuestionnaireRepo {
 
@@ -54,7 +53,7 @@ public class QuestionnaireRepo {
         });
     }
 
-    public void getFromFirebase(final Context context, final SectionListener callback){
+    public void getFromFirebase(final SectionListener callback){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference questionnaires = reference.child("Questionnaires").child(UserID.userID).child("sections");
         final ArrayList<Section> mSections = new ArrayList<>();

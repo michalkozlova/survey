@@ -3,7 +3,6 @@ package michal.edu.first.Questionnaire;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,24 +11,16 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 import michal.edu.first.Questionnaire.Java.Question;
 import michal.edu.first.Questionnaire.Java.QuestionnaireRepo;
-import michal.edu.first.Questionnaire.Java.Section;
 import michal.edu.first.Questionnaire.Java.SectionListener;
 import michal.edu.first.Questionnaire.RecyclerQuestionItem.QuestionFragment;
 import michal.edu.first.R;
-import michal.edu.first.UserID;
+import michal.edu.first.User.UserID;
 
 public class QuestionnaireActivity extends AppCompatActivity{
 
@@ -75,6 +66,7 @@ public class QuestionnaireActivity extends AppCompatActivity{
                     getSupportFragmentManager().beginTransaction().replace(R.id.thirdSection, section3).commit();
 
                     showProgress(false);
+                    System.out.println(currentFullQuiz.getSections().size());
                 }
             });
         }
@@ -106,6 +98,7 @@ public class QuestionnaireActivity extends AppCompatActivity{
     private void saveChanges() {
         DatabaseReference newQuestionnaire = FirebaseDatabase.getInstance().getReference().child("Questionnaires").child(UserID.userID);
         newQuestionnaire.setValue(currentFullQuiz);
+        System.out.println(currentFullQuiz.getSections().size());
         //TODO: fix it
     }
 

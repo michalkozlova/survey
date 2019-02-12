@@ -17,10 +17,15 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 import michal.edu.first.Login.LoginActivity;
+import michal.edu.first.Login.User;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
-import michal.edu.first.Store.NewStoreActivity;
 import michal.edu.first.Store.StoreActivity;
+import michal.edu.first.User.UserID;
+import michal.edu.first.User.UserListener;
+import michal.edu.first.User.UserRepo;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,8 +36,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         checkIfLoggedIn();
+
     }
 
     private void checkIfLoggedIn() {
@@ -67,9 +71,17 @@ public class MainActivity extends AppCompatActivity
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }else {
-                    //System.out.println("else");
-                    //UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                    //TODO: to do something else
+                    UserID.userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    new UserRepo().getUserFromFirebase(new UserListener() {
+                        @Override
+                        public void onUserCallback(ArrayList<User> users) {
+                            for (User user : users) {
+                                if(user.getId().equals(UserID.userID)){
+                                    UserID.thisUser = user;
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });

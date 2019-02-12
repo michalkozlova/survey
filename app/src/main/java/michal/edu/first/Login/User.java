@@ -8,6 +8,7 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+    private Boolean hasStore = false;
 
     public User(){}
 
@@ -59,6 +60,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Boolean getHasStore() {
+        return hasStore;
+    }
+
+    public void setHasStore(Boolean hasStore) {
+        this.hasStore = hasStore;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -67,6 +76,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", hasStore=" + hasStore +
                 '}';
     }
 }

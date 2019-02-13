@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity
                                     }
                                 }
                                 System.out.println(UserID.thisUser);
+                                //TODO: why after registration 4 times????
                             }
                         });
                     }

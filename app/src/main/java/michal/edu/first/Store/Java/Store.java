@@ -7,6 +7,9 @@ import michal.edu.first.Store.Java.Branch;
 
 public class Store implements Serializable {
 
+    public static final int STORE_RETAIL = 0;
+    public static final int STORE_RESTAURANT = 1;
+
     private Integer storeType;
     private String StoreNameEng;
     private String StoreNameHeb;

@@ -61,9 +61,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements Navigati
         tvThirdSection = findViewById(R.id.tvThirdSection);
 
         showProgress(true);
-
-        //TODO: why he doesn't do it from the first time?????
-
+//TODO: doesn't work from the first time!!!
         if (currentFullQuiz == null) {
             new QuestionnaireRepo().fireOrJson(this, new SectionListener() {
                 @Override
@@ -245,8 +243,7 @@ public class QuestionnaireActivity extends AppCompatActivity implements Navigati
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
-            UserID.userID = null;
-            UserID.thisUser = null;
+            UserID.logOut();
             FirebaseAuth.getInstance().signOut();
         }
 

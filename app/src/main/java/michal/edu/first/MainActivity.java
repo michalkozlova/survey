@@ -1,5 +1,6 @@
 package michal.edu.first;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 boolean isUserLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
-                
+                //TODO: showProgress
                 if (!isUserLoggedIn){
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -88,6 +89,23 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    ProgressDialog dialog;
+
+    private void showProgress(boolean show){
+        if (dialog == null) {
+            dialog = new ProgressDialog(this);
+
+            dialog.setCancelable(true);
+            dialog.setTitle("Please wait");
+            dialog.setMessage("Loading...");
+        }
+        if (show){
+            dialog.show();
+        }else {
+            dialog.dismiss();
+        }
     }
 
     @Override
@@ -139,8 +157,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
-            UserID.userID = null;
-            UserID.thisUser = null;
+            UserID.logOut();
             FirebaseAuth.getInstance().signOut();
         }
 

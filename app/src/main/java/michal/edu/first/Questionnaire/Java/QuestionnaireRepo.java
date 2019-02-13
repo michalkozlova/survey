@@ -2,6 +2,7 @@ package michal.edu.first.Questionnaire.Java;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.RawRes;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +21,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 
 import michal.edu.first.R;
+import michal.edu.first.Store.Java.Store;
 import michal.edu.first.User.UserID;
 
 public class QuestionnaireRepo {
@@ -77,7 +79,15 @@ public class QuestionnaireRepo {
     }
 
     private FullQuiz importFromJSON(Context context) {
-        InputStream resourceReader = context.getResources().openRawResource(R.raw.sample_questionnaire_retail);
+        int x;
+
+        if (UserID.thisStore.getStoreType() == Store.STORE_RESTAURANT) {
+            x = R.raw.sample_questionnaire_restaurant;
+        }else {
+            x = R.raw.sample_questionnaire_retail;
+        }
+
+        InputStream resourceReader = context.getResources().openRawResource(x);
         Writer writer = new StringWriter();
 
         try {

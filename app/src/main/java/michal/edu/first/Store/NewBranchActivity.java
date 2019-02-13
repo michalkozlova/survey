@@ -57,7 +57,11 @@ public class NewBranchActivity extends AppCompatActivity {
                 DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").child(branchID);
                 newBranch.setValue(branch);
 
-                startActivity(new Intent(NewBranchActivity.this, StoreActivity.class));
+                UserID.thisStore.getBranches().add(branch);
+
+                Intent intent = new Intent(NewBranchActivity.this, StoreActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 

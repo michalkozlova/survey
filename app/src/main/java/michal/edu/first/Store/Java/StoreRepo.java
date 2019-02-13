@@ -58,7 +58,6 @@ public class StoreRepo{
 
                 if (!mBranches.isEmpty()){
                     callback.onBranchCallback(mBranches);
-                    System.out.println(mBranches);
                 }
             }
 

@@ -32,7 +32,6 @@ import michal.edu.first.User.UserID;
 public class StoreActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     TextView storeName;
-    Store store;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +51,39 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
 
 
         storeName = findViewById(R.id.storeName);
+        System.out.println(UserID.thisStore);
 
         if (!UserID.thisUser.getHasStore()) {
             startActivity(new Intent(StoreActivity.this, NewStoreActivity.class));
         } else {
-            new StoreRepo().getStoreFromFirebase(new StoreListener() {
-                @Override
-                public void onStoreCallBack(Store store) {
-                    storeName.setText(store.getStoreNameEng());
+            if (UserID.thisStore == null) {
+                new StoreRepo().getStoreFromFirebase(new StoreListener() {
+                    @Override
+                    public void onStoreCallBack(Store store) {
+                        UserID.thisStore = store;
+                        storeName.setText(store.getStoreNameEng());
 
-                    new StoreRepo().getBranchesFromFireBase(new BranchListener() {
-                        @Override
-                        public void onBranchCallback(ArrayList<Branch> branches) {
-                            getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.branchContainer, BranchFragment.newInstance(branches))
-                                    .commit();
-                        }
-                    });
+                        new StoreRepo().getBranchesFromFireBase(new BranchListener() {
+                            @Override
+                            public void onBranchCallback(ArrayList<Branch> branches) {
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.branchContainer, BranchFragment.newInstance(branches))
+                                        .commit();
+                                UserID.thisStore.setBranches(branches);
+                                System.out.println("added branches " + UserID.thisStore);
+                            }
+                        });
 
-                }
-            });
+                    }
+                });
+            }else {
+                storeName.setText(UserID.thisStore.getStoreNameEng());
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisStore.getBranches()))
+                        .commit();
+            }
         }
 
 
@@ -103,8 +114,7 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
         }else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
-            UserID.userID = null;
-            UserID.thisUser = null;
+            UserID.logOut();
             FirebaseAuth.getInstance().signOut();
         }
 

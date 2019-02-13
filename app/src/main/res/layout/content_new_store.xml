@@ -8,6 +8,13 @@
     tools:context=".Store.NewStoreActivity"
     tools:showIn="@layout/app_bar_new_store">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="?attr/actionBarSize" />
+
     <Button
         android:id="@+id/btnChoseType"
         android:layout_width="wrap_content"
@@ -19,7 +26,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
 
     <EditText
         android:id="@+id/etStoreNameEng"

@@ -29,9 +29,6 @@ import michal.edu.first.User.UserID;
 
 public class NewStoreActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final int STORE_RETAIL = 0;
-    public static final int STORE_RESTAURANT = 1;
-
     private int storeType;
 
     EditText etStoreNameEng, etStoreNameHeb;
@@ -74,7 +71,7 @@ public class NewStoreActivity extends AppCompatActivity implements NavigationVie
                 dialog.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (storeType == STORE_RETAIL){
+                        if (storeType == Store.STORE_RETAIL){
                             btnChoseType.setText("Retail");
                         }else {
                             btnChoseType.setText("Restaurant");
@@ -129,8 +126,7 @@ public class NewStoreActivity extends AppCompatActivity implements NavigationVie
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
-            UserID.userID = null;
-            UserID.thisUser = null;
+            UserID.logOut();
             FirebaseAuth.getInstance().signOut();
         }
 

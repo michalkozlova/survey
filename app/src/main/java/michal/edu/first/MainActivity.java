@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, QuestionnaireActivity.class));
         } else if (id == R.id.nav_store) {
             startActivity(new Intent(this, StoreActivity.class));
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_main) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_share) {
 

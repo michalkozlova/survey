@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 import michal.edu.first.R;
 import michal.edu.first.Store.Java.Branch;
@@ -95,11 +96,11 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
             startActivity(new Intent(this, QuestionnaireActivity.class));
         } else if (id == R.id.nav_store) {
             startActivity(new Intent(this, StoreActivity.class));
+        }  else if (id == R.id.nav_main) {
+            startActivity(new Intent(this, MainActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
             UserID.userID = null;

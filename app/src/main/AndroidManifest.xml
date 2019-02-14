@@ -12,10 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Store.NewBranchActivity"
-            android:label="@string/title_activity_new_branch"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".Store.NewStoreActivity"
             android:label="@string/title_activity_new_store"
             android:theme="@style/AppTheme.NoActionBar" />

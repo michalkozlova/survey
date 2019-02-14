@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -27,9 +28,10 @@ import michal.edu.first.Store.Java.Store;
 import michal.edu.first.Store.Java.StoreListener;
 import michal.edu.first.Store.Java.StoreRepo;
 import michal.edu.first.Store.RecyclerBranchItem.BranchFragment;
+import michal.edu.first.User.User;
 import michal.edu.first.User.UserID;
 
-public class StoreActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class StoreActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView storeName;
 
@@ -51,8 +53,14 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
 
 
         storeName = findViewById(R.id.storeName);
-        System.out.println(UserID.thisStore);
+        System.out.println("UserID.thisStore: " + UserID.thisStore);
+        System.out.println("thisUser: " + UserID.thisUser);
 
+//        if (UserID.thisUser == null){
+//            FirebaseUser fu = FirebaseAuth.getInstance().getCurrentUser();
+//            UserID.thisUser = new User(fu.getUid(), fu.getUid(), fu.getEmail(), "", "");
+//            System.out.println("Init user");
+//        }
         if (!UserID.thisUser.getHasStore()) {
             startActivity(new Intent(StoreActivity.this, NewStoreActivity.class));
         } else {
@@ -60,6 +68,9 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
                 new StoreRepo().getStoreFromFirebase(new StoreListener() {
                     @Override
                     public void onStoreCallBack(Store store) {
+                        if (store == null) {
+                            System.out.println("Store is null return");
+                        }
                         UserID.thisStore = store;
                         storeName.setText(store.getStoreNameEng());
 
@@ -77,7 +88,7 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
 
                     }
                 });
-            }else {
+            } else {
                 storeName.setText(UserID.thisStore.getStoreNameEng());
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -87,13 +98,11 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
         }
 
 
-
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(StoreActivity.this, NewBranchActivity.class));
+                getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, new AddBranchFragment()).addToBackStack("").commit();
             }
         });
     }
@@ -107,11 +116,11 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
             startActivity(new Intent(this, QuestionnaireActivity.class));
         } else if (id == R.id.nav_store) {
             startActivity(new Intent(this, StoreActivity.class));
-        }  else if (id == R.id.nav_main) {
+        } else if (id == R.id.nav_main) {
             startActivity(new Intent(this, MainActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
-        }else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {
             UserID.logOut();

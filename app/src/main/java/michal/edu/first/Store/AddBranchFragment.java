@@ -1,11 +1,13 @@
 package michal.edu.first.Store;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,27 +17,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import michal.edu.first.R;
 import michal.edu.first.Store.Java.Address;
 import michal.edu.first.Store.Java.Branch;
+import michal.edu.first.Store.RecyclerBranchItem.BranchFragment;
 import michal.edu.first.User.UserID;
 
-public class NewBranchActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class AddBranchFragment extends Fragment {
 
     Button btnDone;
     EditText etBranchNameEng, etBranchNameHeb, etCity, etStreet, etNum, etPhoneNumber;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_branch);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        btnDone = findViewById(R.id.btnDone);
-        etBranchNameEng = findViewById(R.id.etBranchNameEng);
-        etBranchNameHeb = findViewById(R.id.etBranchNameHeb);
-        etCity = findViewById(R.id.etCity);
-        etStreet = findViewById(R.id.etStreet);
-        etNum = findViewById(R.id.etNum);
-        etPhoneNumber = findViewById(R.id.etPhoneNumber);
+    public AddBranchFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_add_branch, container, false);
+
+        btnDone = v.findViewById(R.id.btnDone);
+        etBranchNameEng = v.findViewById(R.id.etBranchNameEng);
+        etBranchNameHeb = v.findViewById(R.id.etBranchNameHeb);
+        etCity = v.findViewById(R.id.etCity);
+        etStreet = v.findViewById(R.id.etStreet);
+        etNum = v.findViewById(R.id.etNum);
+        etPhoneNumber = v.findViewById(R.id.etPhoneNumber);
 
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,19 +70,25 @@ public class NewBranchActivity extends AppCompatActivity {
 
                 UserID.thisStore.getBranches().add(branch);
 
-                Intent intent = new Intent(NewBranchActivity.this, StoreActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisStore.getBranches()))
+                        .commit();
+                showProgress(false);
             }
         });
 
+
+        return v;
     }
+
 
     ProgressDialog dialog;
 
     private void showProgress(boolean show){
         if (dialog == null) {
-            dialog = new ProgressDialog(this);
+            dialog = new ProgressDialog(getContext());
 
             dialog.setCancelable(true);
             dialog.setTitle("Please wait");

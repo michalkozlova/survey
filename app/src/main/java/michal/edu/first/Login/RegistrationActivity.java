@@ -43,7 +43,7 @@ public class RegistrationActivity extends AppCompatActivity implements OnFailure
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isEmailValid() | !isPasswordValid() | !isFirstNameValid() | !isLastNameValid() | !isPasswordConfirmed()){
+                if (!isEmailValid() | !isPasswordValid() | !isFirstNameValid() | !isLastNameValid() | !isPasswordConfirmed()) {
                     return;
                 }
 
@@ -53,27 +53,42 @@ public class RegistrationActivity extends AppCompatActivity implements OnFailure
                 task.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        DatabaseReference newUser = FirebaseDatabase.getInstance().getReference().child("Users").push();
-                        newUser.setValue(new User(newUser.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid(), email(), firstName(), lastName()));
+                        String uid = authResult.getUser().getUid();
+                        DatabaseReference newUser = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+                        newUser.setValue(new User(uid, uid, email(), firstName(), lastName()));
 
                         Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
-                });
-                task.addOnFailureListener(RegistrationActivity.this);
+                }).addOnFailureListener(RegistrationActivity.this);
             }
         });
     }
 
-    String email(){return etEmailAddress.getText().toString();}
-    String password(){return etPassword.getText().toString();}
-    String confirmedPassword(){return etConfirmPassword.getText().toString();}
-    String firstName(){return etFirstName.getText().toString();}
-    String lastName(){return etLastName.getText().toString();}
+    String email() {
+        return etEmailAddress.getText().toString();
+    }
+
+    String password() {
+        return etPassword.getText().toString();
+    }
+
+    String confirmedPassword() {
+        return etConfirmPassword.getText().toString();
+    }
+
+    String firstName() {
+        return etFirstName.getText().toString();
+    }
+
+    String lastName() {
+        return etLastName.getText().toString();
+    }
+
     ProgressDialog dialog;
 
-    private void showProgress(boolean show){
+    private void showProgress(boolean show) {
         if (dialog == null) {
             dialog = new ProgressDialog(this);
 
@@ -81,56 +96,60 @@ public class RegistrationActivity extends AppCompatActivity implements OnFailure
             dialog.setTitle("Please wait");
             dialog.setMessage("You will be registered soon!");
         }
-        if (show){
+        if (show) {
             dialog.show();
-        }else {
+        } else {
             dialog.dismiss();
         }
     }
 
-    private boolean isFirstNameValid(){
-        if (firstName().isEmpty()){
+    private boolean isFirstNameValid() {
+        if (firstName().isEmpty()) {
             etFirstName.setError("Please put first name");
             return false;
         } else {
             return true;
         }
     }
-    private boolean isLastNameValid(){
-        if (firstName().isEmpty()){
+
+    private boolean isLastNameValid() {
+        if (firstName().isEmpty()) {
             etLastName.setError("Please put last name");
             return false;
         } else {
             return true;
         }
     }
-    private boolean isEmailValid(){
-        if (email().isEmpty()){
+
+    private boolean isEmailValid() {
+        if (email().isEmpty()) {
             etEmailAddress.setError(getText(R.string.empty_email));
             return false;
         }
         boolean isEmailValid = email().matches(Patterns.EMAIL_ADDRESS.pattern());
-        if(!isEmailValid){
+        if (!isEmailValid) {
             etEmailAddress.setError(getText(R.string.invalid_email));
         }
         return isEmailValid;
     }
-    private boolean isPasswordValid(){
-        if (password().isEmpty()){
+
+    private boolean isPasswordValid() {
+        if (password().isEmpty()) {
             etPassword.setError(getText(R.string.empty_password));
             return false;
         }
         boolean isPasswordValid = password().length() >= 6;
-        if (!isPasswordValid){
+        if (!isPasswordValid) {
             etPassword.setError(getText(R.string.invalid_password));
         }
         return isPasswordValid;
     }
-    private boolean isPasswordConfirmed(){
-        if (confirmedPassword().isEmpty()){
+
+    private boolean isPasswordConfirmed() {
+        if (confirmedPassword().isEmpty()) {
             etConfirmPassword.setError("Please confirm password");
             return false;
-        } else if (!confirmedPassword().equals(password())){
+        } else if (!confirmedPassword().equals(password())) {
             etConfirmPassword.setError("Password is not the same");
             return false;
         } else {

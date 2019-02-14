@@ -60,6 +60,9 @@ public class QuestionnaireActivity extends AppCompatActivity implements Navigati
         tvSecondSection = findViewById(R.id.tvSecondSection);
         tvThirdSection = findViewById(R.id.tvThirdSection);
 
+        System.out.println("this store : " + UserID.thisStore);
+        System.out.println("this user : " + UserID.thisUser);
+
         showProgress(true);
 //TODO: doesn't work from the first time!!!
         if (currentFullQuiz == null) {

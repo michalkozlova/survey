@@ -2,6 +2,9 @@ package michal.edu.first.User;
 
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 
+
+//TODO:Delete key
+
 public class User {
     private String id;
     private String key;
@@ -18,6 +21,15 @@ public class User {
         this.lastName = lastName;
         this.id = id;
         this.key = key;
+    }
+
+    public User(String id, String key, String email, String firstName, String lastName, Boolean hasStore) {
+        this.id = id;
+        this.key = key;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.hasStore = hasStore;
     }
 
     public String getKey() {

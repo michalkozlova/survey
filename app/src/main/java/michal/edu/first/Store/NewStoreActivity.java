@@ -21,9 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import michal.edu.first.MainActivity;
 import michal.edu.first.Questionnaire.QuestionnaireActivity;
 import michal.edu.first.R;
+import michal.edu.first.Store.Java.Branch;
 import michal.edu.first.Store.Java.Store;
 import michal.edu.first.User.UserID;
 
@@ -33,7 +36,6 @@ public class NewStoreActivity extends AppCompatActivity implements NavigationVie
 
     EditText etStoreNameEng, etStoreNameHeb;
     Button btnNext, btnChoseType;
-    NumberPicker npBranchNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,6 @@ public class NewStoreActivity extends AppCompatActivity implements NavigationVie
         etStoreNameHeb = findViewById(R.id.etStoreNameHeb);
         btnNext = findViewById(R.id.btnNext);
         btnChoseType = findViewById(R.id.btnChoseType);
-        npBranchNumber = findViewById(R.id.npBranchNumber);
 
         btnChoseType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,18 +88,13 @@ public class NewStoreActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID);
-                newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
+                newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString(), new ArrayList<Branch>()));
                 UserID.thisUser.setHasStore(true);
-                DatabaseReference hasStore = FirebaseDatabase.getInstance().getReference().child("Users").child(UserID.thisUser.getKey()).child("hasStore");
+                DatabaseReference hasStore = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("hasStore");
                 hasStore.setValue(true);
                 startActivity(new Intent(NewStoreActivity.this, StoreActivity.class));
             }
         });
-
-
-        //TODO: number picker
-        npBranchNumber.setMinValue(1);
-        npBranchNumber.setMinValue(10);
     }
 
     @Override

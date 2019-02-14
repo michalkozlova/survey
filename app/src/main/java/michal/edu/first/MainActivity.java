@@ -76,11 +76,7 @@ public class MainActivity extends AppCompatActivity
                         new UserRepo().getUserFromFirebase(new UserListener() {
                             @Override
                             public void onUserCallback(ArrayList<User> users) {
-                                for (User user : users) {
-                                    if (user.getId().equals(UserID.userID)) {
-                                        UserID.thisUser = user;
-                                    }
-                                }
+
                                 System.out.println(UserID.thisUser);
                                 //TODO: why after registration 4 times????
                             }

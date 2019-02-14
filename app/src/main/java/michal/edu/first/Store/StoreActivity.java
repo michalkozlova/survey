@@ -56,11 +56,6 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
         System.out.println("UserID.thisStore: " + UserID.thisStore);
         System.out.println("thisUser: " + UserID.thisUser);
 
-//        if (UserID.thisUser == null){
-//            FirebaseUser fu = FirebaseAuth.getInstance().getCurrentUser();
-//            UserID.thisUser = new User(fu.getUid(), fu.getUid(), fu.getEmail(), "", "");
-//            System.out.println("Init user");
-//        }
         if (!UserID.thisUser.getHasStore()) {
             startActivity(new Intent(StoreActivity.this, NewStoreActivity.class));
         } else {

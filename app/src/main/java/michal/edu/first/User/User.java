@@ -2,12 +2,7 @@ package michal.edu.first.User;
 
 import michal.edu.first.Questionnaire.Java.FullQuiz;
 
-
-//TODO:Delete key
-
 public class User {
-    private String id;
-    private String key;
     private String email;
     private String firstName;
     private String lastName;
@@ -15,37 +10,17 @@ public class User {
 
     public User(){}
 
-    public User(String key, String id, String email, String firstName, String lastName) {
+    public User(String email, String firstName, String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
-        this.key = key;
     }
 
-    public User(String id, String key, String email, String firstName, String lastName, Boolean hasStore) {
-        this.id = id;
-        this.key = key;
+    public User(String email, String firstName, String lastName, Boolean hasStore) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.hasStore = hasStore;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -83,9 +58,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
-                ", key='" + key + '\'' +
-                ", email='" + email + '\'' +
+                "email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", hasStore=" + hasStore +

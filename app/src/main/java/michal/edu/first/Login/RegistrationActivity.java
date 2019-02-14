@@ -55,7 +55,7 @@ public class RegistrationActivity extends AppCompatActivity implements OnFailure
                     public void onSuccess(AuthResult authResult) {
                         String uid = authResult.getUser().getUid();
                         DatabaseReference newUser = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                        newUser.setValue(new User(uid, uid, email(), firstName(), lastName()));
+                        newUser.setValue(new User(email(), firstName(), lastName()));
 
                         Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

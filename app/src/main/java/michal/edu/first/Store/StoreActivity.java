@@ -53,8 +53,6 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
 
 
         storeName = findViewById(R.id.storeName);
-        System.out.println("UserID.thisStore: " + UserID.thisStore);
-        System.out.println("thisUser: " + UserID.thisUser);
 
         if (!UserID.thisUser.getHasStore()) {
             startActivity(new Intent(StoreActivity.this, NewStoreActivity.class));
@@ -63,9 +61,6 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
                 new StoreRepo().getStoreFromFirebase(new StoreListener() {
                     @Override
                     public void onStoreCallBack(Store store) {
-                        if (store == null) {
-                            System.out.println("Store is null return");
-                        }
                         UserID.thisStore = store;
                         storeName.setText(store.getStoreNameEng());
 
@@ -76,8 +71,7 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
                                         .beginTransaction()
                                         .replace(R.id.branchContainer, BranchFragment.newInstance(branches))
                                         .commit();
-                                UserID.thisStore.setBranches(branches);
-                                System.out.println("added branches " + UserID.thisStore);
+                                UserID.thisBranches = branches;
                             }
                         });
 
@@ -85,21 +79,27 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
                 });
             } else {
                 storeName.setText(UserID.thisStore.getStoreNameEng());
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisStore.getBranches()))
-                        .commit();
+                new StoreRepo().getBranchesFromFireBase(new BranchListener() {
+                    @Override
+                    public void onBranchCallback(ArrayList<Branch> branches) {
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.branchContainer, BranchFragment.newInstance(branches))
+                                .commit();
+                        UserID.thisBranches = branches;
+                    }
+                });
             }
         }
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, new AddBranchFragment()).addToBackStack("").commit();
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, new AddBranchFragment()).commit();
+//            }
+//        });
     }
 
     @Override

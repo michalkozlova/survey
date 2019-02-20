@@ -25,7 +25,7 @@ public class StoreRepo{
 
                 HashMap<String, Object> map = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, Object>>() {
                 });
-                    //UserID.hasStore = true;
+
                     Number st = (Number) map.get("storeType");
                     String snEng = (String) map.get("storeNameEng");
                     String snHeb = (String) map.get("storeNameHeb");
@@ -46,7 +46,7 @@ public class StoreRepo{
 
 
     public ArrayList<Branch> getBranchesFromFireBase(final BranchListener callback){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Branches").child(UserID.userID);
         final ArrayList<Branch> mBranches = new ArrayList<>();
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -56,9 +56,14 @@ public class StoreRepo{
                     mBranches.add(value);
                 }
 
-                if (!mBranches.isEmpty()){
+                if (mBranches.isEmpty()){
+                    Branch emptyBranch = new Branch("No branches yet", "-", "00-000-0000", new Address("", "", 0));
+                    mBranches.add(emptyBranch);
+                    callback.onBranchCallback(mBranches);
+                } else {
                     callback.onBranchCallback(mBranches);
                 }
+
             }
 
             @Override

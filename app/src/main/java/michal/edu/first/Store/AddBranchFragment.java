@@ -14,6 +14,8 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.SQLOutput;
+
 import michal.edu.first.R;
 import michal.edu.first.Store.Java.Address;
 import michal.edu.first.Store.Java.Branch;
@@ -53,8 +55,6 @@ public class AddBranchFragment extends Fragment {
             public void onClick(View v) {
                 showProgress(true);
 
-                String branchID = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").push().getKey();
-
                 int num = Integer.valueOf(etNum.getText().toString());
                 String street = etStreet.getText().toString();
                 String city = etCity.getText().toString();
@@ -63,17 +63,18 @@ public class AddBranchFragment extends Fragment {
                 String branchNameEng = etBranchNameEng.getText().toString();
                 String branchNameHeb = etBranchNameHeb.getText().toString();
                 String branchPhone = etPhoneNumber.getText().toString();
-                Branch branch = new Branch(branchNameEng, branchNameHeb, branchPhone, address, branchID);
+                Branch branch = new Branch(branchNameEng, branchNameHeb, branchPhone, address);
 
-                DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").child(branchID);
+                DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Branches").child(UserID.userID).child(branchNameEng);
                 newBranch.setValue(branch);
+                UserID.thisBranches.add(branch);
 
-                UserID.thisStore.getBranches().add(branch);
+                System.out.println(UserID.thisBranches);
 
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisStore.getBranches()))
+                        .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisBranches))
                         .commit();
                 showProgress(false);
             }

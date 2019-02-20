@@ -51,7 +51,7 @@ public class FullBranchDetailsFragment extends Fragment {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID).child("branches").child(branch.getBranchID()).removeValue();
+                FirebaseDatabase.getInstance().getReference().child("Branches").child(UserID.userID).child(branch.getBranchNameEng()).removeValue();
             }
         });
 

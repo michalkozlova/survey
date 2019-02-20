@@ -88,7 +88,7 @@ public class NewStoreActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 DatabaseReference newRetail = FirebaseDatabase.getInstance().getReference().child("Stores").child(UserID.userID);
-                newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString(), new ArrayList<Branch>()));
+                newRetail.setValue(new Store(storeType, etStoreNameEng.getText().toString(), etStoreNameHeb.getText().toString()));
                 UserID.thisUser.setHasStore(true);
                 DatabaseReference hasStore = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("hasStore");
                 hasStore.setValue(true);

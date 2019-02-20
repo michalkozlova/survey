@@ -13,7 +13,6 @@ public class Store implements Serializable {
     private Integer storeType;
     private String StoreNameEng;
     private String StoreNameHeb;
-    private ArrayList<Branch> branches;
 
     public Store() {
     }
@@ -24,18 +23,9 @@ public class Store implements Serializable {
         StoreNameHeb = storeNameHeb;
     }
 
-    public Store(Integer storeType, String storeNameEng, String storeNameHeb, ArrayList<Branch> branches) {
-        this.storeType = storeType;
-        StoreNameEng = storeNameEng;
-        StoreNameHeb = storeNameHeb;
-        this.branches = branches;
-    }
-
     public Integer getStoreType() {
         return storeType;
     }
-
-
 
     public String getStoreNameEng() {
         return StoreNameEng;
@@ -53,16 +43,8 @@ public class Store implements Serializable {
         StoreNameHeb = storeNameHeb;
     }
 
-    public ArrayList<Branch> getBranches() {
-        return branches;
-    }
-
     public void setStoreType(Integer storeType) {
         this.storeType = storeType;
-    }
-
-    public void setBranches(ArrayList<Branch> branches) {
-        this.branches = branches;
     }
 
     @Override
@@ -71,7 +53,6 @@ public class Store implements Serializable {
                 "storeType=" + storeType +
                 ", StoreNameEng='" + StoreNameEng + '\'' +
                 ", StoreNameHeb='" + StoreNameHeb + '\'' +
-                ", branches=" + branches +
                 '}';
     }
 }

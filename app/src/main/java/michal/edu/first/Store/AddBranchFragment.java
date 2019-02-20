@@ -2,7 +2,6 @@ package michal.edu.first.Store;
 
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +12,6 @@ import android.widget.EditText;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.sql.SQLOutput;
 
 import michal.edu.first.R;
 import michal.edu.first.Store.Java.Address;
@@ -74,6 +71,7 @@ public class AddBranchFragment extends Fragment {
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_up)
                         .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisBranches))
                         .commit();
                 showProgress(false);

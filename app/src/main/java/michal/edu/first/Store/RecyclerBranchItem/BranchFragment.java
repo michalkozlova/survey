@@ -10,17 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 
 import michal.edu.first.R;
 import michal.edu.first.Store.AddBranchFragment;
 import michal.edu.first.Store.Java.Branch;
-import michal.edu.first.Store.Java.Store;
-import michal.edu.first.User.UserID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,8 +53,10 @@ public class BranchFragment extends Fragment {
             public void onClick(View view) {
                 getActivity()
                         .getSupportFragmentManager()
-                        .beginTransaction().replace(R.id.branchContainer, new AddBranchFragment())
-                        .addToBackStack("")
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_up, R.anim.exit_to_bottom, R.anim.enter_from_bottom, R.anim.exit_to_up)
+                        .replace(R.id.branchContainer, new AddBranchFragment())
+                        .addToBackStack(null)
                         .commit();
             }
         });

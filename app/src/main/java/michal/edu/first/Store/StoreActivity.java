@@ -55,9 +55,11 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
         storeName = findViewById(R.id.storeName);
 
         if (!UserID.thisUser.getHasStore()) {
+            //if user doesn't have a store, he has to open one
             startActivity(new Intent(StoreActivity.this, NewStoreActivity.class));
         } else {
             if (UserID.thisStore == null) {
+                //get store and branches from Firebase
                 new StoreRepo().getStoreFromFirebase(new StoreListener() {
                     @Override
                     public void onStoreCallBack(Store store) {
@@ -91,15 +93,6 @@ public class StoreActivity extends AppCompatActivity implements NavigationView.O
                 });
             }
         }
-
-
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.branchContainer, new AddBranchFragment()).commit();
-//            }
-//        });
     }
 
     @Override

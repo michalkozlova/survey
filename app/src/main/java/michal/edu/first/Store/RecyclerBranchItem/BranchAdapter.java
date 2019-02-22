@@ -46,8 +46,9 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchView
                 activity
                         .getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
                         .replace(R.id.branchContainer, FullBranchDetailsFragment.newInstance(branches.get(i)))
-                        .addToBackStack("")
+                        .addToBackStack(null)
                         .commit();
             }
         });

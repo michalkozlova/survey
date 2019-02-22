@@ -3,6 +3,7 @@ package michal.edu.first.Store;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,13 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import michal.edu.first.R;
 import michal.edu.first.Store.Java.Address;
 import michal.edu.first.Store.Java.Branch;
+import michal.edu.first.Store.Java.BranchListener;
+import michal.edu.first.Store.Java.StoreRepo;
 import michal.edu.first.Store.RecyclerBranchItem.BranchFragment;
 import michal.edu.first.User.UserID;
 
@@ -50,6 +55,7 @@ public class AddBranchFragment extends Fragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 showProgress(true);
 
                 int num = Integer.valueOf(etNum.getText().toString());
@@ -64,23 +70,36 @@ public class AddBranchFragment extends Fragment {
 
                 DatabaseReference newBranch = FirebaseDatabase.getInstance().getReference().child("Branches").child(UserID.userID).child(branchNameEng);
                 newBranch.setValue(branch);
-                UserID.thisBranches.add(branch);
 
-                System.out.println(UserID.thisBranches);
+                handler.postDelayed(r, 2000);
 
-                getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_up)
-                        .replace(R.id.branchContainer, BranchFragment.newInstance(UserID.thisBranches))
-                        .commit();
-                showProgress(false);
             }
         });
 
 
         return v;
     }
+
+
+    Handler handler = new Handler();
+    Runnable r = new Runnable() {
+        @Override
+        public void run() {
+            new StoreRepo().getBranchesFromFireBase(new BranchListener() {
+                @Override
+                public void onBranchCallback(ArrayList<Branch> branches) {
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                            .replace(R.id.branchContainer, BranchFragment.newInstance(branches))
+                            .commit();
+                    showProgress(false);
+                    System.out.println("it's your runnable");
+                }
+            });
+        }
+    };
 
 
     ProgressDialog dialog;

@@ -54,7 +54,7 @@ public class BranchFragment extends Fragment {
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_up, R.anim.exit_to_bottom, R.anim.enter_from_bottom, R.anim.exit_to_up)
+                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                         .replace(R.id.branchContainer, new AddBranchFragment())
                         .addToBackStack(null)
                         .commit();
